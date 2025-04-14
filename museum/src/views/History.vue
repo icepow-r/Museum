@@ -313,15 +313,14 @@ export default {
 <style scoped>
 .horizontal-timeline-container {
   position: relative;
-  padding: 0 40px;
   margin: 40px 0;
 }
 
 .timeline-navigation {
   position: absolute;
   top: 50%;
-  width: 100%;
-  left: 0;
+  width: calc(100% - 80px);
+  left: 40px;
   transform: translateY(-50%);
   display: flex;
   justify-content: space-between;
@@ -330,29 +329,36 @@ export default {
 }
 
 .timeline-nav-btn {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.9);
   color: #395eab;
-  border: 2px solid #395eab;
+  border: 1px solid #d0d9ea;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s ease;
   pointer-events: auto;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.timeline-nav-btn i {
+  font-size: 1.2rem;
 }
 
 .timeline-nav-btn:hover:not(:disabled) {
   background-color: #395eab;
   color: white;
+  border-color: #395eab;
+  transform: scale(1.1);
 }
 
 .timeline-nav-btn:disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
+  background-color: #e9ecef;
 }
 
 .horizontal-timeline-wrapper {
@@ -361,6 +367,7 @@ export default {
   scrollbar-width: none;
   -ms-overflow-style: none;
   cursor: grab;
+  padding: 0 40px;
 }
 
 .horizontal-timeline-wrapper::-webkit-scrollbar {
@@ -368,26 +375,28 @@ export default {
 }
 
 .horizontal-timeline {
-  padding: 20px 0;
+  padding: 30px 0;
   min-width: 100%;
+  display: inline-block;
 }
 
 .timeline-track {
   position: relative;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   min-width: max-content;
   padding: 0 20px;
+  align-items: center;
+  min-height: 100px;
 }
 
 .timeline-line {
   position: absolute;
   top: 50%;
-  left: 40px;
-  right: 40px;
-  height: 4px;
-  background-color: #e0e0e0;
+  left: 60px;
+  right: 60px;
+  height: 5px;
+  background: linear-gradient(to right, #d0d9ea, #b3c5e5, #d0d9ea);
+  border-radius: 3px;
   transform: translateY(-50%);
   z-index: 1;
 }
@@ -398,58 +407,83 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 40px;
+  padding: 0 50px;
   cursor: pointer;
   transition: transform 0.3s ease;
-  min-width: 160px;
+  min-width: 180px;
+  text-align: center;
+  justify-content: center;
+  margin-top: 90px;
 }
 
 .timeline-period:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px);
+  align-items: center;
+  position: relative;
+  /* margin-bottom: 15px; */
 }
 
 .timeline-period-node {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  top: auto;
+  margin-top: 0;
 }
 
 .timeline-dot {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background-color: white;
-  border: 4px solid #395eab;
-  margin-bottom: 10px;
+  border: 5px solid #395eab;
   transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(57, 94, 171, 0.3);
+  position: static;
+  transform: none;
+  z-index: 3;
 }
 
 .timeline-period:hover .timeline-dot {
-  background-color: #395eab;
-  box-shadow: 0 0 0 4px rgba(57, 94, 171, 0.3);
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid #d0d9ea;
+  margin-top: 0;
+  transition: all 0.3s ease;
+  display: inline-block;
 }
 
 .timeline-period-year {
-  font-weight: 600;
-  font-size: 0.9rem;
-  color: #555;
-  padding: 5px 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #395eab;
+  padding: 6px 15px;
   border-radius: 20px;
-  background-color: #f0f0f0;
-  margin-bottom: 8px;
+  background-color: rgba(255, 255, 255, 1);
+  border: 1px solid #d0d9ea;
+  margin-top: 10px;
   transition: all 0.3s ease;
+  display: inline-block;
 }
 
 .timeline-period:hover .timeline-period-year {
   color: white;
   background-color: #395eab;
+  border-color: #395eab;
+  transform: scale(1.05);
+  justify-content: center;
 }
 
 .timeline-period-title {
-  font-size: 0.8rem;
-  color: #666;
-  text-align: center;
-  max-width: 150px;
+  font-size: 0.9rem;
+  color: #555;
+  font-weight: 500;
+  max-width: 200px;
+  line-height: 1.4;
+  min-height: calc(0.9rem * 1.4 * 2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal-overlay {
@@ -681,10 +715,88 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .timeline-navigation {
+    display: none;
+  }
+
+  .horizontal-timeline-wrapper {
+    overflow-x: visible;
+    cursor: default;
+    padding: 0 15px;
+  }
+
+  .horizontal-timeline {
+    padding: 0;
+    display: block;
+  }
+
+  .timeline-track {
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: auto;
+  }
+
+  .timeline-line {
+    top: 40px;
+    bottom: 40px;
+    left: 83px;
+    width: 5px;
+    height: auto;
+    right: auto;
+    background: linear-gradient(to bottom, #d0d9ea, #b3c5e5, #d0d9ea);
+    transform: none;
+  }
+
   .timeline-period {
-    padding: 0 30px;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 25px 0;
+    min-width: auto;
+    width: 100%;
+    text-align: left;
+    justify-content: flex-start;
+  }
+   
+  .timeline-period:hover {
+    transform: none;
+  }
+
+  .timeline-period-node {
+    margin-bottom: 0;
+    margin-right: 20px;
+    position: relative;
+    height: 100%;
+    padding-top: 5px;
   }
   
+  .timeline-dot {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    margin: 0 auto;
+    margin-bottom: 5px;
+    width: 18px;
+    height: 18px;
+    border-width: 4px;
+  }
+
+  .timeline-period-year {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    padding: 4px 10px;
+  }
+
+  .timeline-period-title {
+    min-height: 0;
+    font-size: 0.85rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+    max-width: none;
+  }
+
   .timeline-period-year {
     font-size: 0.8rem;
     padding: 4px 8px;

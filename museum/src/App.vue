@@ -109,20 +109,22 @@ export default {
         </router-link>
         <p class="lead mb-0 small-text">История и наследие Санкт-Петербургского электротехнического университета</p>
       </div>
-      <router-link style="text-decoration: none; color: white" to="/employee">
-        <button v-if="this.token != undefined" style="margin-right: 1em" class="btn auth-btn">
-          Панель управления
+      <div class="auth-buttons-wrapper d-flex flex-column flex-md-row align-items-stretch align-items-md-center">
+        <router-link v-if="token != undefined" style="text-decoration: none; color: white" to="/employee" class="auth-button-link">
+          <button style="margin-right: 1em" class="btn auth-btn">
+            Панель управления
+          </button>
+        </router-link>
+        <button v-if="token == undefined" class="btn auth-btn d-flex align-items-center" data-bs-toggle="modal"
+          data-bs-target="#authModal">
+          <i class="bi bi-person-fill me-2"></i>
+          Авторизация
         </button>
-      </router-link>
-      <button v-if="this.token == undefined" class="btn auth-btn d-flex align-items-center" data-bs-toggle="modal"
-        data-bs-target="#authModal">
-        <i class="bi bi-person-fill me-2"></i>
-        Авторизация
-      </button>
-      <button v-else class="btn auth-btn d-flex align-items-center" @click="logout">
-        <i class="bi bi-box-arrow-right me-2"></i>
-        Выход
-      </button>
+        <button v-else class="btn auth-btn d-flex align-items-center auth-button-logout" @click="logout">
+          <i class="bi bi-box-arrow-right me-2"></i>
+          Выход
+        </button>
+      </div>
     </header>
 
     <nav v-if="$route.path !== '/'" class="breadcrumb-container" aria-label="breadcrumb">
@@ -246,6 +248,29 @@ footer h5 {
 @media (max-width: 768px) {
   .header-content {
     width: 100%;
+    text-align: center;
+  }
+
+  .auth-buttons-wrapper {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .auth-buttons-wrapper .auth-button-link,
+  .auth-buttons-wrapper .btn.auth-btn {
+    width: 100%;
+    margin-right: 0 !important;
+    margin-bottom: 0.5rem;
+    justify-content: center;
+  }
+  
+  .auth-buttons-wrapper .auth-button-link button {
+      width: 100%;
+      margin-right: 0 !important;
+  }
+  
+  .auth-buttons-wrapper > *:last-child {
+      margin-bottom: 0;
   }
 
   .display-5 {
